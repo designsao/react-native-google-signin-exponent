@@ -47,4 +47,6 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.google.android.gms:play-services-auth:$googlePlayServicesVersion"
     compile "com.facebook.react:react-native:+"
+    // add expo as a dependency
+    implementation('host.exp.exponent:expoview:28.0.0@aar')
 }

@@ -43,6 +43,9 @@ import static co.apptailor.googlesignin.Utils.getSignInOptions;
 import static co.apptailor.googlesignin.Utils.getUserProperties;
 import static co.apptailor.googlesignin.Utils.scopesToString;
 
+// Exponent
+import host.exp.expoview.Exponent;
+
 
 public class RNGoogleSigninModule extends ReactContextBaseJavaModule {
     private GoogleApiClient _apiClient;
@@ -58,18 +61,34 @@ public class RNGoogleSigninModule extends ReactContextBaseJavaModule {
 
     public RNGoogleSigninModule(final ReactApplicationContext reactContext) {
         super(reactContext);
-        reactContext.addActivityEventListener(new RNGoogleSigninActivityEventListener());
+        // reactContext.addActivityEventListener(new RNGoogleSigninActivityEventListener());
+
+        // add Activity Event Listener named mActivityEventListener
+        Exponent.getInstance().addActivityResultListener(mActivityEventListener);
     }
 
-    private class RNGoogleSigninActivityEventListener extends BaseActivityEventListener {
+    // create Activity Event Listener named mActivityEventListener
+    private final host.exp.exponent.ActivityResultListener mActivityEventListener = new host.exp.exponent.ActivityResultListener() {
         @Override
-        public void onActivityResult(Activity activity, final int requestCode, final int resultCode, final Intent intent) {
+        public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+            // some code here
             if (requestCode == RNGoogleSigninModule.RC_SIGN_IN) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(intent);
                 handleSignInResult(result);
             }
         }
-    }
+    };
+
+
+    // private class RNGoogleSigninActivityEventListener extends BaseActivityEventListener {
+    //     @Override
+    //     public void onActivityResult(Activity activity, final int requestCode, final int resultCode, final Intent intent) {
+    //         if (requestCode == RNGoogleSigninModule.RC_SIGN_IN) {
+    //             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(intent);
+    //             handleSignInResult(result);
+    //         }
+    //     }
+    // }
 
     @Override
     public Map<String, Object> getConstants() {
